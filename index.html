@@ -256,7 +256,7 @@ td:last-child{color:var(--muted)}
   <div class="cards">
     <div class="card gold"><span class="num">①</span><h3>Fundamentals matter more than ever</h3><p>“Code is not cheap. Bad code is the most expensive it's ever been.” He translates decades-old practice for agents.</p></div>
     <div class="card gold"><span class="num">②</span><h3>Code is the agent's environment</h3><p>Agents copy what they find. Bad code breeds more bad code; AI speeds up entropy.</p></div>
-    <div class="card gold"><span class="num">③</span><h3>Keep the human in control</h3><p>You decide what to build, when each step runs, which irreversible changes go in. Implementation can still run AFK.</p></div>
+    <div class="card gold"><span class="num">③</span><h3 style="text-transform:none;letter-spacing:0;font-family:var(--serif);font-style:italic;font-size:1em">“I believe in inversion of control and you should be in control of the stack.”</h3><p>You decide what to build, when each step runs, which irreversible changes go in. Implementation can still run AFK.</p></div>
   </div>
   <p class="thesis">Three angles to unpack them: Dev · Code Review · Write Skill</p>
 </section>
@@ -315,7 +315,8 @@ td:last-child{color:var(--muted)}
   <div class="split">
     <div style="display:grid;gap:1.1em">
       <p class="eyebrow">Dev · Failure mode 4 / 4</p>
-      <h2>Minimize software entropy.</h2>
+      <h2>“We built a ball of mud.”</h2>
+      <p class="thesis">Because agents can radically speed up coding, they also accelerate software entropy. Codebases get more complex at an unprecedented rate. <span class="mono" style="font-size:.6em;letter-spacing:.1em">— MATTPOCOCK/SKILLS README</span></p>
       <p class="pull">Invest in the design of the system every day.<cite>— Kent Beck, Extreme Programming Explained</cite></p>
       <p class="pull">The best modules are deep. They allow a lot of functionality to be accessed through a simple interface.<cite>— John Ousterhout, A Philosophy of Software Design</cite></p>
     </div>
@@ -485,14 +486,22 @@ useEffect(() =&gt; {
   <h2>Steps and reference. Split by branch, not by length.</h2>
   <div class="split" style="align-items:start">
     <div class="lane mine">
-      <div class="who"><code>SKILL.md</code></div>
-      <div class="row"><span class="chip">step 1</span><span class="arrow">→</span><span class="chip">step 2</span><span class="arrow">→</span><span class="chip">step 3</span></div>
-      <p class="cap">+ reference every branch needs</p>
-      <p class="cap mono">ADR step: “Use the format in ADR-FORMAT.md”</p>
+      <div class="who"><code>domain-modeling/SKILL.md</code></div>
+      <p class="code-label muted" style="margin:0">During the session</p>
+      <ul class="cap">
+        <li>Challenge against the glossary</li>
+        <li>Sharpen fuzzy language</li>
+        <li>Discuss concrete scenarios</li>
+        <li>Cross-reference with code</li>
+        <li><b>Update GLOSSARY.md inline</b> <span class="mono">“Use the format in GLOSSARY-FORMAT.md”</span></li>
+        <li><b>Offer ADRs sparingly</b> <span class="mono">“Use the format in ADR-FORMAT.md”</span></li>
+      </ul>
+      <p class="cap">Stays inline because every run needs it: the file layout, the three tests for an ADR.</p>
     </div>
     <div style="display:grid;gap:.8em">
-      <div class="lane"><div class="who mono" style="font-size:.9em">ADR-FORMAT.md</div><p class="cap">only the ADR branch reads it</p></div>
-      <div class="lane"><div class="who mono" style="font-size:.9em">GLOSSARY-FORMAT.md</div><p class="cap">only the glossary branch reads it</p></div>
+      <div class="lane"><div class="who mono" style="font-size:.9em">GLOSSARY-FORMAT.md</div><p class="cap">Glossary template and rules. Read only when a term gets resolved.</p></div>
+      <div class="lane"><div class="who mono" style="font-size:.9em">ADR-FORMAT.md</div><p class="cap">ADR template and numbering. Read only when an ADR gets written.</p></div>
+      <p class="cap" style="margin:0;font-size:.86em;color:var(--muted)">A session may update the glossary, write an ADR, or neither: that's why both templates live outside. <code>/to-spec</code> has one path, so its spec template stays inline.</p>
     </div>
   </div>
   <p class="thesis">The pointer's wording decides whether the agent reads the file.</p>
