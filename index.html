@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Matt Pocock Thinks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&display=swap" rel="stylesheet">
+<style>
+/* Palette and fonts lifted from aihero.dev */
+:root{
+  --bg:#fbfbfc; --card:#fff; --ink:#14161a; --muted:#14161ab3; --faint:#14161a73;
+  --hair:#14161a1a; --wash:#14161a0a; --panel:#ecedef;
+  --gold:#f5c451; --gold-ink:#191510; --gold-wash:#f5c45133;
+  --sans:"DM Sans",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"Source Serif 4",Georgia,serif;
+  --glow:linear-gradient(90deg,#ffd27a 0%,#ff9a3c 22%,#ff5fd2 48%,#ff8a3c 72%,#ff2a1a 100%);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:clamp(16px,1.6vw,26px);line-height:1.5}
+
+.slide{display:none;position:relative;min-height:100vh;
+  padding:clamp(2.2rem,5vh,4.5rem) clamp(1.5rem,6vw,7rem) 5rem;
+  flex-direction:column;justify-content:center;gap:1.1em;max-width:1400px;margin:0 auto}
+.slide.is-active{display:flex;animation:rise .45s cubic-bezier(.2,.7,.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+
+.eyebrow{font-family:var(--mono);font-size:.68em;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);display:flex;align-items:baseline;gap:.9em;margin:0}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--hair)}
+h1{font-weight:700;font-size:clamp(2.6rem,6.6vw,5.6rem);line-height:.98;letter-spacing:-.035em;margin:0}
+h2{font-weight:700;font-size:clamp(1.6rem,3.4vw,2.9rem);line-height:1.06;letter-spacing:-.025em;margin:0;max-width:26ch}
+h3{font-family:var(--mono);font-size:.72em;font-weight:500;letter-spacing:.14em;text-transform:uppercase;margin:0 0 .5em}
+.thesis{font-size:clamp(1.05rem,1.6vw,1.35rem);color:var(--muted);max-width:52ch;margin:0}
+mark{background:linear-gradient(transparent 55%,var(--gold) 55%);color:inherit;padding:0 .08em}
+ul{margin:0;padding:0;list-style:none;display:grid;gap:.6em;max-width:76ch}
+li{padding-left:1.4em;position:relative}
+li::before{content:"";position:absolute;left:0;top:.6em;width:.5em;height:.5em;background:var(--gold);border-radius:2px}
+li.plain::before{background:var(--hair);height:2px;top:.75em;width:.7em;border-radius:0}
+b,strong{font-weight:700}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.muted{color:var(--muted)}
+a{color:var(--ink);text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:3px}
+.byline{font-family:var(--mono);font-size:.78em;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:.4em 0 0}
+
+.pull{font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,2.4vw,2rem);line-height:1.25;
+  border-left:4px solid var(--gold);padding-left:.8em;margin:.2em 0;max-width:40ch}
+.pull cite{display:block;margin-top:.6em;font-family:var(--mono);font-style:normal;font-size:.42em;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+.cards{display:grid;gap:1em;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr))}
+.card{background:var(--card);border:1px solid var(--hair);border-radius:10px;padding:1em 1.1em}
+.card p{margin:0;color:var(--muted);font-size:.94em}
+.card.gold{border-color:var(--gold);box-shadow:inset 0 3px 0 var(--gold)}
+.num{font-family:var(--mono);font-size:.7em;color:var(--faint);letter-spacing:.1em}
+
+.split{display:grid;gap:clamp(1rem,3vw,2.6rem);grid-template-columns:1fr}
+@media(min-width:900px){.split{grid-template-columns:1fr 1fr;align-items:center}}
+figure{margin:0;display:grid;gap:.5em;justify-items:start}
+figure img{max-width:100%;max-height:52vh;object-fit:contain;border:1px solid var(--hair);border-radius:10px;cursor:zoom-in}
+figcaption{font-family:var(--mono);font-size:.68em;color:var(--muted);letter-spacing:.04em}
+
+.chip{display:inline-block;font-family:var(--mono);font-size:.78em;padding:.35em .7em;border:1px solid var(--hair);
+  border-radius:6px;background:var(--card);white-space:nowrap}
+.chip.gold{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
+.chip.ink{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:.5em}
+.arrow{font-family:var(--mono);color:var(--faint)}
+.tag{font-family:var(--mono);font-size:.62em;letter-spacing:.12em;text-transform:uppercase;padding:.2em .55em;border-radius:4px;background:var(--panel);margin-left:.5em;vertical-align:middle}
+.tag.gold{background:var(--gold);color:var(--gold-ink)}
+
+.glow{background:var(--glow);position:relative;overflow:hidden}
+.glow::after{content:"";position:absolute;inset:0;opacity:.35;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* title + dividers */
+.title{display:grid;gap:2rem;grid-template-columns:1fr}
+@media(min-width:900px){.title{grid-template-columns:1.2fr .8fr;align-items:center}}
+.title .glow{height:62vh;border-radius:14px;display:flex;justify-content:center;align-items:flex-end}
+.title .glow img{position:relative;z-index:1;height:92%;width:auto;max-width:100%;object-fit:contain;object-position:bottom}
+.divider .glow{height:10px;border-radius:999px;width:min(100%,28rem)}
+.divider .big{font-family:var(--mono);font-size:clamp(3rem,8vw,6rem);line-height:1;color:var(--faint);margin:0}
+
+/* comparison */
+.vs{display:grid;gap:1.2em;grid-template-columns:1fr}
+@media(min-width:900px){.vs{grid-template-columns:1fr 1fr}}
+.lane{border:1px solid var(--hair);border-radius:12px;padding:1.1em 1.2em;background:var(--card);display:grid;gap:.9em;align-content:start}
+.lane.mine{border-color:var(--gold);box-shadow:inset 0 3px 0 var(--gold)}
+.lane .who{font-weight:700;font-size:1.15em}
+.lane .cap{margin:0;font-size:.86em;color:var(--muted)}
+.tradeoff{display:flex;justify-content:space-between;align-items:center;gap:1em;font-family:var(--mono);font-size:.78em;
+  border-top:1px solid var(--hair);padding-top:.8em;color:var(--muted)}
+.tradeoff .bar{flex:1;height:2px;background:linear-gradient(90deg,var(--ink),var(--gold))}
+
+/* stack */
+.stack{display:grid;gap:.45em;justify-items:center}
+.stack div{display:flex;justify-content:space-between;gap:1em;align-items:center;border-radius:8px;padding:.7em 1em;font-weight:700}
+.stack small{font-family:var(--mono);font-weight:400;font-size:.68em;letter-spacing:.06em}
+
+pre{margin:0;background:var(--card);border:1px solid var(--hair);border-radius:10px;padding:1em 1.1em;
+  font-family:var(--mono);font-size:.74em;line-height:1.6;overflow-x:auto;white-space:pre}
+.code-label{font-family:var(--mono);font-size:.68em;letter-spacing:.14em;text-transform:uppercase;margin:0 0 .4em}
+
+table{border-collapse:collapse;width:100%;font-size:.8em}
+th,td{text-align:left;padding:.45em .7em;border-bottom:1px solid var(--hair);vertical-align:top}
+td:first-child{font-weight:700;white-space:nowrap}
+td:last-child{color:var(--muted)}
+
+.rail{position:fixed;left:0;top:0;right:0;height:3px;background:var(--hair);z-index:5}
+.rail::after{content:"";position:absolute;inset:0 auto 0 0;width:calc(var(--p,0) * 100%);background:var(--glow);transition:width .35s}
+.hud{position:fixed;right:clamp(1rem,4vw,3rem);bottom:1.4rem;z-index:5;font-family:var(--mono);
+  font-size:.7rem;letter-spacing:.14em;color:var(--muted);margin:0}
+.hud b{font-weight:500;color:var(--ink)}
+#zoom{position:fixed;inset:0;background:rgba(20,22,26,.92);display:none;place-items:center;z-index:20;padding:2vmin;cursor:zoom-out}
+#zoom.on{display:grid}
+#zoom img{max-width:96vw;max-height:96vh;border-radius:8px}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+  .rail,.hud{display:none}
+  .slide{display:flex!important;min-height:auto;page-break-after:always;animation:none}
+}
+</style>
+</head>
+<body>
+<div class="rail" id="rail"></div>
+
+<main>
+<section class="slide">
+  <div class="title">
+    <div style="display:grid;gap:1.2rem">
+      <p class="eyebrow">Frontend Sharing · 2026 Q4</p>
+      <h1>How Matt Pocock thinks</h1>
+      <p class="thesis">Reading <span class="mono">mattpocock/skills</span> as an engineering philosophy, not a skill catalogue.</p>
+      <p class="byline">Zihao Lin</p>
+    </div>
+    <div class="glow"><img src="assets/matt-pocock.png" alt="Matt Pocock"></div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Intro</p>
+  <h2>Matt Pocock</h2>
+  <div class="cards">
+    <div class="card"><h3>Total TypeScript</h3><p>TypeScript courses</p></div>
+    <div class="card"><h3>AI Hero</h3><p>AI engineering courses, e.g. “Claude Code for Real Engineers”. Newsletter: ~60k devs</p></div>
+    <div class="card"><h3>Open source</h3><p>ts-reset · sandcastle · evalite</p></div>
+    <div class="card gold"><h3>mattpocock/skills</h3><p>His own <code>.agents</code> directory, public since Feb 2026</p></div>
+  </div>
+  <p style="margin:.4em 0 0"><span style="font-family:var(--mono);font-size:clamp(2.4rem,5vw,4rem);font-weight:500;letter-spacing:-.02em">295.4k</span>
+    <span class="byline" style="display:inline;margin-left:.6em">GitHub stars · Oct 2026</span></p>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Disclaimer</p>
+  <h2>Not a skill tutorial. An introduction to how he thinks.</h2>
+  <ul>
+    <li>Not necessarily better than other approaches. It keeps <mark>you in control of every step</mark>, instead of locked into a framework.</li>
+    <li class="plain">Rearrange the steps freely and build your own workflow.</li>
+    <li>Focus: how he turns mature engineering thinking into an AI harness.</li>
+  </ul>
+  <div class="row" style="margin-top:.6em">
+    <span class="chip ink">01 Dev</span><span class="chip ink">02 Code Review</span><span class="chip ink">03 Write Skill</span>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Quick recap</p>
+  <h2>Same goal, opposite trigger.</h2>
+  <div class="vs">
+    <div class="lane">
+      <div class="who">Superpowers <span class="tag">model-invoked</span></div>
+      <div class="row"><span class="chip">brainstorming</span><span class="arrow">→</span><span class="chip">writing-plans</span><span class="arrow">→</span><span class="chip">subagent-driven-development</span></div>
+      <p class="cap">Fixed pipeline. <b>The agent</b> decides when each step fires. The plan spells out exact files, signatures and tests.</p>
+      <p class="cap mono">“even a 1% chance … ABSOLUTELY MUST invoke”</p>
+    </div>
+    <div class="lane mine">
+      <div class="who">mattpocock/skills <span class="tag gold">user-invoked</span></div>
+      <div>
+        <p class="code-label muted">Main workflow</p>
+        <div class="row"><span class="chip gold">/grill-with-docs</span><span class="arrow">→</span><span class="chip">/to-spec</span><span class="arrow">→</span><span class="chip">/to-tickets</span><span class="arrow">→</span><span class="chip">/implement</span><span class="arrow">→</span><span class="chip">code-review</span></div>
+      </div>
+      <div>
+        <p class="code-label muted">Small change</p>
+        <div class="row"><span class="chip gold">/grill-with-docs</span><span class="arrow">→</span><span class="chip">/implement</span></div>
+      </div>
+      <p class="cap">Small composable pieces. <b>You</b> pick the path.</p>
+    </div>
+  </div>
+  <div class="tradeoff"><span>context load on the agent</span><span class="bar"></span><span>cognitive load on you</span></div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Quick recap</p>
+  <h2>Other skills</h2>
+  <div class="vs">
+    <div class="lane">
+      <div class="who">User-invoked <span class="tag">orchestrate</span></div>
+      <div class="row"><span class="chip">/grill-me</span><span class="chip">/ask-matt</span><span class="chip">/improve-codebase-architecture</span><span class="chip">/retro</span><span class="chip">/implement-spec</span><span class="chip">/handoff</span></div>
+    </div>
+    <div class="lane">
+      <div class="who">Model-invoked <span class="tag">discipline</span></div>
+      <div class="row"><span class="chip">grilling</span><span class="chip">domain-modeling</span><span class="chip">codebase-design</span><span class="chip">tdd</span><span class="chip">diagnosing-bugs</span><span class="chip">pr</span><span class="chip">writing-for-agents</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="split">
+    <div style="display:grid;gap:1.1em">
+      <p class="eyebrow">Main philosophy</p>
+      <p class="pull">Approaches like GSD, BMAD, and Spec-Kit try to help by owning the process. But while doing so, they take away your control and make bugs in the process hard to resolve. These skills are designed to be small, easy to adapt, and composable.<cite>— mattpocock/skills README</cite></p>
+    </div>
+    <figure><img src="assets/tweet-superpowers.png" alt="Matt Pocock tweet: Superpowers gives the agent superpowers; my skills give you superpowers"><figcaption>@mattpocockuk, Jul 2026</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Main philosophy</p>
+  <h2>Three pillars run through every skill.</h2>
+  <div class="cards">
+    <div class="card gold"><span class="num">①</span><h3>Fundamentals matter more than ever</h3><p>“Code is not cheap. Bad code is the most expensive it's ever been.” He translates decades-old practice for agents.</p></div>
+    <div class="card gold"><span class="num">②</span><h3>Code is the agent's environment</h3><p>Agents copy what they find. Bad code breeds more bad code; AI speeds up entropy.</p></div>
+    <div class="card gold"><span class="num">③</span><h3>Keep the human in control</h3><p>You decide what to build, when each step runs, which irreversible changes go in. Implementation can still run AFK.</p></div>
+  </div>
+  <p class="thesis">Three angles to unpack them: Dev · Code Review · Write Skill</p>
+</section>
+
+<section class="slide divider">
+  <p class="big">01</p>
+  <h1>Dev</h1>
+  <p class="thesis">Four failure modes, four old books.</p>
+  <div class="glow" aria-hidden="true"></div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Dev · Failure mode 1 / 4</p>
+  <h2>“AI didn't do what I want.”</h2>
+  <p class="pull">No-one knows exactly what they want.<cite>— David Thomas &amp; Andrew Hunt, The Pragmatic Programmer</cite></p>
+  <div class="card gold" style="max-width:46rem"><h3>Fix · grilling</h3><p>The agent interviews you until you share an understanding. <b>Facts</b>: it looks them up. <b>Decisions</b>: it asks you.</p></div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Dev · Failure mode 1 / 4</p>
+  <h2>No plan mode. No long plan.</h2>
+  <p class="pull">Plan mode is extremely eager to create an asset.<cite>— Matt Pocock</cite></p>
+  <div class="vs">
+    <div class="lane">
+      <div class="who">Plan mode</div>
+      <div class="row"><span class="chip">ask a few questions</span><span class="arrow">→</span><span class="chip ink">plan</span></div>
+      <p class="cap">The agent sees the finish line, so the questions stay shallow.</p>
+    </div>
+    <div class="lane mine">
+      <div class="who">Matt</div>
+      <div class="row"><span class="chip gold">grill</span><span class="arrow">→</span><span class="chip">spec</span><span class="arrow">→</span><span class="chip">tickets</span></div>
+      <p class="cap"><b>Spec</b>: the features, from the user's view. <b>Tickets</b>: each fits one session's context. Models keep getting smarter: where and how to change the code, the AI decides.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Dev · Failure mode 2 / 4</p>
+  <h2>“AI is too verbose.”</h2>
+  <p class="pull">With a ubiquitous language, conversations among developers and expressions of the code are all derived from the same domain model.<cite>— Eric Evans, Domain-Driven Design</cite></p>
+  <div class="card gold" style="max-width:46rem"><h3>Fix · GLOSSARY.md</h3><p>A shared language between you and the agent.</p></div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Dev · Failure mode 3 / 4</p>
+  <h2>“Code doesn't work.”</h2>
+  <p class="pull">Always take small, deliberate steps. <mark>The rate of feedback is your speed limit.</mark> Never take on a task that's too big.<cite>— David Thomas &amp; Andrew Hunt, The Pragmatic Programmer</cite></p>
+  <div class="card gold" style="max-width:46rem"><h3>Fix · TDD</h3><p>Red → green → refactor, one small step at a time.</p></div>
+</section>
+
+<section class="slide">
+  <div class="split">
+    <div style="display:grid;gap:1.1em">
+      <p class="eyebrow">Dev · Failure mode 4 / 4</p>
+      <h2>Minimize software entropy.</h2>
+      <p class="pull">Invest in the design of the system every day.<cite>— Kent Beck, Extreme Programming Explained</cite></p>
+      <p class="pull">The best modules are deep. They allow a lot of functionality to be accessed through a simple interface.<cite>— John Ousterhout, A Philosophy of Software Design</cite></p>
+    </div>
+    <figure><img src="assets/deep-modules.png" alt="Deep modules: lots of functionality, simple interface, hides complexity. Shallow modules: not much functionality, complex interface, surfaces complexity"><figcaption>Deep vs shallow modules</figcaption></figure>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Dev · Failure mode 4 / 4</p>
+  <h2>Deep module, frontend edition.</h2>
+  <div class="split" style="align-items:start">
+    <div>
+      <p class="code-label muted">Shallow · every component wires it again</p>
+<pre>const [user, setUser] = useState&lt;User&gt;()
+const [loading, setLoading] = useState(false)
+useEffect(() =&gt; {
+  setLoading(true)
+  fetchUser(id).then(setUser).finally(() =&gt; setLoading(false))
+}, [id])
+// + cache, retry, abort … at every call site</pre>
+    </div>
+    <div>
+      <p class="code-label">Deep · one small interface</p>
+<pre style="border-color:var(--gold)">const { user, isLoading, error } = useUser(id)
+// fetch, cache, retry, abort: hidden inside
+// tests target useUser only</pre>
+    </div>
+  </div>
+  <p class="pull">Design the interface, delegate the implementation.<cite>— Matt Pocock</cite></p>
+</section>
+
+<section class="slide divider">
+  <p class="big">02</p>
+  <h1>Code Review</h1>
+  <p class="thesis">A software factory needs brakes.</p>
+  <div class="glow" aria-hidden="true"></div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Code Review · Software factory</p>
+  <div class="split">
+    <div style="display:grid;gap:1.1em">
+      <h2>Only an accelerator? You built a garbage cannon.</h2>
+      <ul>
+        <li>Work triggered by automation, not people: a slow-query report comes in, an agent writes the fix and opens a PR.</li>
+        <li>More bad PRs than anyone can review.</li>
+      </ul>
+      <p class="pull">Code is the agent's environment.<cite>— Matt Pocock, paraphrased</cite></p>
+    </div>
+    <div class="stack">
+      <p class="code-label muted" style="justify-self:start">Brakes · 3 layers</p>
+      <div style="width:60%;background:var(--ink);color:var(--bg)">3 · Human review<small>your time</small></div>
+      <div style="width:80%;background:var(--gold);color:var(--gold-ink)">2 · AI review<small>tokens</small></div>
+      <div style="width:100%;background:var(--panel)">1 · Lint · types · tests<small>machine time</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Code Review · Layer 2 · AI review</p>
+  <h2>Implement makes it work. Review makes it good.</h2>
+  <div class="vs">
+    <div class="lane">
+      <div class="who">Implementer <span class="tag">overloaded</span></div>
+      <div class="row"><span class="chip">explore</span><span class="chip">write code</span><span class="chip">run tests</span><span class="chip">debug</span></div>
+      <p class="cap">Reads <code>AGENTS.md</code>: navigation pointers only. No coding standards.</p>
+    </div>
+    <div class="lane mine">
+      <div class="who">Reviewer <span class="tag gold">room to spare</span></div>
+      <div class="row"><span class="chip">receives a diff</span></div>
+      <p class="cap">Reads <code>CODING_STANDARDS.md</code> and refactors the change to match.</p>
+    </div>
+  </div>
+  <p class="pull">Commits, no comments.<cite>— Matt Pocock, paraphrased</cite></p>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Code Review · Layer 2 · AI review</p>
+  <h2>Twelve Fowler smells, the review baseline.</h2>
+  <table>
+    <tbody>
+      <tr><td>Mysterious Name</td><td>Name doesn't reveal what it does → rename</td><td>Shotgun Surgery</td><td>One change, edits across many files → gather into one module</td></tr>
+      <tr><td>Duplicated Code</td><td>Same logic shape twice → extract, call from both</td><td>Divergent Change</td><td>One module, many unrelated reasons to change → split</td></tr>
+      <tr><td>Feature Envy</td><td>Uses another module's data more than its own → move it next to that data</td><td>Speculative Generality</td><td>Abstraction for needs the spec doesn't have → delete, inline</td></tr>
+      <tr><td>Data Clumps</td><td>Same fields keep travelling together → bundle into one type</td><td>Message Chains</td><td><code>a.b().c().d()</code> → hide the walk behind one method</td></tr>
+      <tr><td>Primitive Obsession</td><td>A string stands in for a domain concept → give it a type</td><td>Middle Man</td><td>Mostly delegates → cut it, call the target</td></tr>
+      <tr><td>Repeated Switches</td><td>Same switch on the same type recurs → polymorphism or one map</td><td>Refused Bequest</td><td>Subclass ignores what it inherits → composition</td></tr>
+    </tbody>
+  </table>
+  <p class="thesis">Smell names are leading words: one name recalls the whole pattern.</p>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Code Review · Layer 3 · Human review</p>
+  <h2>Spend your review on one-way doors.</h2>
+  <div class="cards">
+    <div class="card"><h3>Two-way door</h3><p>Easy to revert. Skim it.</p></div>
+    <div class="card gold"><h3>One-way door</h3><p>Deletes data, emails 60,000 people, costly migration. Read it hard.</p></div>
+    <div class="card"><h3>Blast radius</h3><p>How far a mistake spreads: users, data, systems.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Code Review · Layer 3 · Human review</p>
+  <h2>Same comment in two PRs? The bug is in the system.</h2>
+  <div class="vs">
+    <div class="lane">
+      <div class="who"><code>/retro</code> reads agent sessions</div>
+      <ul>
+        <li><b>Mechanical mistake</b> → lint / CI check</li>
+        <li><b>Judgement call</b> → <code>CODING_STANDARDS.md</code>, for the reviewer</li>
+        <li><b>AGENTS.md</b> → navigation pointers only</li>
+      </ul>
+    </div>
+    <div class="lane mine">
+      <div class="who">You pick the fixes</div>
+      <p class="cap">A check always runs; a rule may be ignored.</p>
+      <p class="cap">Automate retro and the agent loops on false positives.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide divider">
+  <p class="big">03</p>
+  <h1>Write Skill</h1>
+  <p class="thesis">Skill hell, and a rubric to get out.</p>
+  <div class="glow" aria-hidden="true"></div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Write Skill · Skill hell</p>
+  <h2>Free skills everywhere. Which ones are good?</h2>
+  <p class="pull">There's no shared rubric, no framework for looking at a skill and making it better.<cite>— Matt Pocock</cite></p>
+  <div class="row"><span class="chip gold">trigger</span><span class="arrow">→</span><span class="chip gold">structure</span><span class="arrow">→</span><span class="chip gold">steering</span><span class="arrow">→</span><span class="chip gold">pruning</span></div>
+  <p class="thesis">Same method for <code>CLAUDE.md</code> / <code>AGENTS.md</code>. His skill is now called <code>writing-for-agents</code>.</p>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Write Skill · Trigger</p>
+  <h2>Who pulls the trigger is a trade-off.</h2>
+  <div class="vs">
+    <div class="lane">
+      <div class="who">Model-invoked</div>
+      <div class="row"><span class="chip">description in context every turn</span><span class="arrow">→</span><span class="chip ink">context load</span></div>
+      <div class="row"><span class="chip">agent may skip it</span><span class="arrow">→</span><span class="chip ink">unpredictable</span><span class="arrow">→</span><span class="chip">needs evals</span></div>
+      <p class="cap">Use when an agent or another skill must reach it: <b>reusable discipline</b>.</p>
+    </div>
+    <div class="lane mine">
+      <div class="who">User-invoked <span class="tag gold">Matt's default</span></div>
+      <div class="row"><span class="chip">you must remember it</span><span class="arrow">→</span><span class="chip gold">cognitive load</span></div>
+      <p class="cap">No context load, no trigger question. <b>Orchestration</b>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Write Skill · Structure</p>
+  <h2>Steps and reference. Split by branch, not by length.</h2>
+  <div class="split" style="align-items:start">
+    <div class="lane mine">
+      <div class="who"><code>SKILL.md</code></div>
+      <div class="row"><span class="chip">step 1</span><span class="arrow">→</span><span class="chip">step 2</span><span class="arrow">→</span><span class="chip">step 3</span></div>
+      <p class="cap">+ reference every branch needs</p>
+      <p class="cap mono">“if writing an ADR, read ADR-FORMAT.md”</p>
+    </div>
+    <div style="display:grid;gap:.8em">
+      <div class="lane"><div class="who mono" style="font-size:.9em">ADR-FORMAT.md</div><p class="cap">only the ADR branch reads it</p></div>
+      <div class="lane"><div class="who mono" style="font-size:.9em">GLOSSARY-FORMAT.md</div><p class="cap">only the glossary branch reads it</p></div>
+    </div>
+  </div>
+  <p class="thesis">The pointer's wording decides whether the agent reads the file.</p>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Write Skill · Steering</p>
+  <h2>Steer with words the model already knows.</h2>
+  <div class="cards">
+    <div class="card gold"><h3>Leading words</h3><p>“vertical slice” instead of a paragraph. Old terms, fewer tokens. Check the reasoning trace: if the agent repeats the word, it works.</p></div>
+    <div class="card"><h3>Completion criterion</h3><p>An agent that sees later steps rushes this one. Sharpen “done” first; split skills only if it still rushes.</p></div>
+    <div class="card"><h3>No negation</h3><p>“Don't write long comments” → “Write one-line comments.”</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Write Skill · Pruning</p>
+  <h2>Small, because every line changes behavior.</h2>
+  <ul>
+    <li><b>No-op test</b> (Matt: “deletion test”): delete a passage. Behavior unchanged? Cut it.</li>
+    <li class="plain">Model-relative: settle it by running, not by debate.</li>
+    <li><b>Descriptions</b>: delete the no-ops there too.</li>
+    <li><b>Sediment</b>: shared docs only grow. Adding feels safe, deleting feels risky.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Conclusion</p>
+  <h2>Three pillars, recapped.</h2>
+  <div class="cards">
+    <div class="card gold"><span class="num">①</span><h3>Fundamentals</h3><p>Old engineering books still answer the new AI failure modes.</p></div>
+    <div class="card gold"><span class="num">②</span><h3>Environment</h3><p>Review the system that creates the code, not just the code.</p></div>
+    <div class="card gold"><span class="num">③</span><h3>Control</h3><p>Review one-way doors.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Conclusion</p>
+  <h2>AI is the tactical programmer. You are the strategic one.</h2>
+  <div class="vs">
+    <div class="lane"><div class="who">Tactical</div><p class="cap">Get the feature working now; complexity piles up.</p></div>
+    <div class="lane mine"><div class="who">Strategic</div><p class="cap">Invest in the design so the system stays easy to change.</p></div>
+  </div>
+  <p class="pull">If we think about AI as … a sergeant on the ground making the code changes, you need someone above that. You need someone thinking on the strategic level. And that's you.<cite>— Matt Pocock · terms from John Ousterhout, A Philosophy of Software Design</cite></p>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Reflection</p>
+  <h2>Where it doesn't fit us yet.</h2>
+  <ul>
+    <li><code>/to-spec</code> and <code>/to-tickets</code> don't fit our Scrum flow: an RD's ticket is already the output of to-tickets. Move both earlier, to ticket creation.</li>
+    <li>Hard to remember all skills: <mark>cognitive load</mark>.</li>
+    <li>Personal experience as the eval. He built evalite, yet skips evals for his skills by choice.</li>
+    <li>Not built for long-running work (<code>/implement-spec</code> is new).</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">References</p>
+  <ul>
+    <li class="plain"><a href="https://github.com/mattpocock/skills">mattpocock/skills</a></li>
+    <li class="plain"><a href="https://blog.aihao.tw/2026/07/25/mattpocock-skills-design-philosophy/">blog.aihao.tw — Matt Pocock 的 Agent Skill 設計哲學</a></li>
+    <li class="plain"><a href="https://x.com/mattpocockuk/status/2077789613691699629">@mattpocockuk — My skills vs superpowers</a></li>
+    <li class="plain"><a href="https://youtu.be/v4F1gFy-hqg">Software Fundamentals Matter More Than Ever</a></li>
+    <li class="plain"><a href="https://youtu.be/M6mYodf0dJM">mattpocock/skills: A complete AI Coding workflow, end-to-end</a></li>
+    <li class="plain"><a href="https://youtu.be/UNzCG3lw6O0">Building Great Agent Skills: The Missing Manual</a></li>
+    <li class="plain"><a href="https://youtu.be/BsJGo1wFTvQ">New Skills! v1.3 brings /pr, /implement-spec, and /retro</a></li>
+    <li class="plain"><a href="https://youtu.be/T-5FW3KRpgI">EP412 — Matt Pocock 怎麼 Code Review？</a></li>
+    <li class="plain"><a href="https://youtu.be/BSH0Rq4ZBbw">EP417 — Matt Pocock Skills v1.3 解析</a></li>
+    <li class="plain"><a href="https://youtu.be/aR97E7aKEgg">700 萬人下載的 /grill-me，Matt Pocock 到底寫了什麼？</a></li>
+  </ul>
+</section>
+
+</main>
+
+<div id="zoom"><img alt=""></div>
+<p class="hud"><b id="n">1</b> / <span id="total">1</span></p>
+
+<script>
+const slides = [...document.querySelectorAll('.slide')];
+const rail = document.getElementById('rail'), n = document.getElementById('n');
+document.getElementById('total').textContent = slides.length;
+let i = 0;
+const zoom = document.getElementById('zoom'), zimg = zoom.querySelector('img');
+const show = k => {
+  i = Math.max(0, Math.min(slides.length - 1, k));
+  slides.forEach((s, j) => s.classList.toggle('is-active', j === i));
+  rail.style.setProperty('--p', (i + 1) / slides.length);
+  n.textContent = i + 1;
+  history.replaceState(null, '', '#' + (i + 1));
+};
+addEventListener('keydown', e => {
+  if (zoom.classList.contains('on')) { zoom.classList.remove('on'); e.preventDefault(); return; }
+  const fwd = ['ArrowRight', 'ArrowDown', ' ', 'PageDown', 'Enter'];
+  const back = ['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'];
+  if (fwd.includes(e.key)) show(i + 1);
+  else if (back.includes(e.key)) show(i - 1);
+  else if (e.key === 'Home') show(0);
+  else if (e.key === 'End') show(slides.length - 1);
+  else return;
+  e.preventDefault();
+});
+addEventListener('click', e => {
+  if (zoom.classList.contains('on')) { zoom.classList.remove('on'); return; }
+  const img = e.target.closest('figure img');
+  if (img) { zimg.src = img.src; zoom.classList.add('on'); }
+});
+addEventListener('dblclick', e => {
+  if (zoom.classList.contains('on') || e.target.closest('figure img') || e.target.closest('a')) return;
+  getSelection().removeAllRanges();
+  show(i + 1);
+});
+addEventListener('hashchange', () => show(+location.hash.slice(1) - 1 || 0));
+show(+location.hash.slice(1) - 1 || 0);
+</script>
+</body>
+</html>
