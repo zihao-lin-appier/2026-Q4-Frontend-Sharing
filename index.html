@@ -107,6 +107,8 @@ table{border-collapse:collapse;width:100%;font-size:.8em}
 th,td{text-align:left;padding:.45em .7em;border-bottom:1px solid var(--hair);vertical-align:top}
 td:first-child{font-weight:700;white-space:nowrap}
 td:last-child{color:var(--muted)}
+.smells{font-size:.72em}
+.smells td{padding:.3em .7em}
 
 .rail{position:fixed;left:0;top:0;right:0;height:3px;background:var(--hair);z-index:5}
 .rail::after{content:"";position:absolute;inset:0 auto 0 0;width:calc(var(--p,0) * 100%);background:var(--glow);transition:width .35s}
@@ -132,8 +134,7 @@ td:last-child{color:var(--muted)}
   <div class="title">
     <div style="display:grid;gap:1.2rem">
       <p class="eyebrow">Frontend Sharing · 2026 Q4</p>
-      <h1>How Matt Pocock thinks</h1>
-      <p class="thesis">Reading <span class="mono">mattpocock/skills</span> as an engineering philosophy, not a skill catalogue.</p>
+      <h1>How Matt Pocock Thinks</h1>
       <p class="byline">Zihao Lin</p>
     </div>
     <div class="glow"><img src="assets/matt-pocock.png" alt="Matt Pocock"></div>
@@ -159,7 +160,7 @@ td:last-child{color:var(--muted)}
   <ul>
     <li>Not necessarily better than other approaches. It keeps <mark>you in control of every step</mark>, instead of locked into a framework.</li>
     <li class="plain">Rearrange the steps freely and build your own workflow.</li>
-    <li>Focus: how he turns mature engineering thinking into an AI harness.</li>
+    <li>Focus: how he condenses engineering fundamentals into repeatable practices.</li>
   </ul>
   <div class="row" style="margin-top:.6em">
     <span class="chip ink">01 Dev</span><span class="chip ink">02 Code Review</span><span class="chip ink">03 Write Skill</span>
@@ -218,6 +219,38 @@ td:last-child{color:var(--muted)}
 </section>
 
 <section class="slide">
+  <p class="eyebrow">Main philosophy · Why control</p>
+  <h2>No clear winner yet. Own your stack.</h2>
+  <p class="pull">When there's no clear winner, when there's no kind of like one true way and when things are changing all the time, you need to own as much of your planning stack as you possibly can.<cite>— Matt Pocock, Workshop, Apr 2026</cite></p>
+  <div class="vs">
+    <div class="lane">
+      <div class="who">Don't own the stack</div>
+      <p class="cap">No observability over the whole thing. When it breaks: “this isn't working, this sucks”, then switch tools.</p>
+    </div>
+    <div class="lane mine">
+      <div class="who">Own the stack</div>
+      <p class="cap">“If you have control over the whole thing, then at least you know how to fix it.”</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <p class="eyebrow">Main philosophy · Why control</p>
+  <h2>Control is not doing every step yourself.</h2>
+  <p class="pull">I know my skills, I know my abilities. I don't want to delegate my thinking to the model.<cite>— Matt Pocock, with David Ondrej, Jun 2026</cite></p>
+  <div class="vs">
+    <div class="lane mine">
+      <div class="who">Human in the loop</div>
+      <p class="cap">“Planning, this alignment phase, has to be human in the loop. Has to be.”</p>
+    </div>
+    <div class="lane">
+      <div class="who">AFK</div>
+      <p class="cap">“Implementation … can be turned into an AFK task.”</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
   <p class="eyebrow">Main philosophy</p>
   <h2>Three pillars run through every skill.</h2>
   <div class="cards">
@@ -255,7 +288,11 @@ td:last-child{color:var(--muted)}
     <div class="lane mine">
       <div class="who">Matt</div>
       <div class="row"><span class="chip gold">grill</span><span class="arrow">→</span><span class="chip">spec</span><span class="arrow">→</span><span class="chip">tickets</span></div>
-      <p class="cap"><b>Spec</b>: the features, from the user's view. <b>Tickets</b>: each fits one session's context. Models keep getting smarter: where and how to change the code, the AI decides.</p>
+      <ul class="cap">
+        <li><b>Spec</b>: the features, from the user's view.</li>
+        <li><b>Tickets</b>: each fits one session's context.</li>
+        <li>Models keep getting smarter: where and how to change the code, the AI decides.</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -318,10 +355,11 @@ useEffect(() =&gt; {
 </section>
 
 <section class="slide">
-  <p class="eyebrow">Code Review · Software factory</p>
+  <p class="eyebrow">Code Review</p>
   <div class="split">
     <div style="display:grid;gap:1.1em">
-      <h2>Only an accelerator? You built a garbage cannon.</h2>
+      <h2>Software factory</h2>
+      <p class="thesis"><b>Only an accelerator? You built a garbage cannon.</b></p>
       <ul>
         <li>Work triggered by automation, not people: a slow-query report comes in, an agent writes the fix and opens a PR.</li>
         <li>More bad PRs than anyone can review.</li>
@@ -357,15 +395,22 @@ useEffect(() =&gt; {
 
 <section class="slide">
   <p class="eyebrow">Code Review · Layer 2 · AI review</p>
-  <h2>Twelve Fowler smells, the review baseline.</h2>
-  <table>
+  <h2>Twelve code smells, the review baseline.</h2>
+  <p class="byline" style="margin:0">From Martin Fowler, <i>Refactoring</i>, ch.3 “Bad Smells in Code”</p>
+  <table class="smells">
     <tbody>
-      <tr><td>Mysterious Name</td><td>Name doesn't reveal what it does → rename</td><td>Shotgun Surgery</td><td>One change, edits across many files → gather into one module</td></tr>
-      <tr><td>Duplicated Code</td><td>Same logic shape twice → extract, call from both</td><td>Divergent Change</td><td>One module, many unrelated reasons to change → split</td></tr>
-      <tr><td>Feature Envy</td><td>Uses another module's data more than its own → move it next to that data</td><td>Speculative Generality</td><td>Abstraction for needs the spec doesn't have → delete, inline</td></tr>
-      <tr><td>Data Clumps</td><td>Same fields keep travelling together → bundle into one type</td><td>Message Chains</td><td><code>a.b().c().d()</code> → hide the walk behind one method</td></tr>
-      <tr><td>Primitive Obsession</td><td>A string stands in for a domain concept → give it a type</td><td>Middle Man</td><td>Mostly delegates → cut it, call the target</td></tr>
-      <tr><td>Repeated Switches</td><td>Same switch on the same type recurs → polymorphism or one map</td><td>Refused Bequest</td><td>Subclass ignores what it inherits → composition</td></tr>
+      <tr><td>Mysterious Name</td><td>Name doesn't reveal what it does → rename</td></tr>
+      <tr><td>Duplicated Code</td><td>Same logic shape twice → extract, call from both</td></tr>
+      <tr><td>Feature Envy</td><td>Uses another module's data more than its own → move it next to that data</td></tr>
+      <tr><td>Data Clumps</td><td>Same fields keep travelling together → bundle into one type</td></tr>
+      <tr><td>Primitive Obsession</td><td>A string stands in for a domain concept → give it a type</td></tr>
+      <tr><td>Repeated Switches</td><td>Same switch on the same type recurs → polymorphism or one map</td></tr>
+      <tr><td>Shotgun Surgery</td><td>One change, edits across many files → gather into one module</td></tr>
+      <tr><td>Divergent Change</td><td>One module, many unrelated reasons to change → split</td></tr>
+      <tr><td>Speculative Generality</td><td>Abstraction for needs the spec doesn't have → delete, inline</td></tr>
+      <tr><td>Message Chains</td><td><code>a.b().c().d()</code> → hide the walk behind one method</td></tr>
+      <tr><td>Middle Man</td><td>Mostly delegates → cut it, call the target</td></tr>
+      <tr><td>Refused Bequest</td><td>Subclass ignores what it inherits → composition</td></tr>
     </tbody>
   </table>
   <p class="thesis">Smell names are leading words: one name recalls the whole pattern.</p>
@@ -388,15 +433,15 @@ useEffect(() =&gt; {
     <div class="lane">
       <div class="who"><code>/retro</code> reads agent sessions</div>
       <ul>
-        <li><b>Mechanical mistake</b> → lint / CI check</li>
+        <li><b>Mechanical mistake</b> → lint / CI check. A check always runs; a rule may be ignored.</li>
         <li><b>Judgement call</b> → <code>CODING_STANDARDS.md</code>, for the reviewer</li>
         <li><b>AGENTS.md</b> → navigation pointers only</li>
       </ul>
     </div>
     <div class="lane mine">
       <div class="who">You pick the fixes</div>
-      <p class="cap">A check always runs; a rule may be ignored.</p>
-      <p class="cap">Automate retro and the agent loops on false positives.</p>
+      <p class="cap">Retro only suggests, ranked by severity. You judge which ones are real problems.</p>
+      <p class="cap">In Matt's own run, the top issue was an agent cutting a release without asking. He judged it minor: a release can be redone.</p>
     </div>
   </div>
 </section>
@@ -429,9 +474,10 @@ useEffect(() =&gt; {
     <div class="lane mine">
       <div class="who">User-invoked <span class="tag gold">Matt's default</span></div>
       <div class="row"><span class="chip">you must remember it</span><span class="arrow">→</span><span class="chip gold">cognitive load</span></div>
-      <p class="cap">No context load, no trigger question. <b>Orchestration</b>.</p>
+      <p class="cap">No context load. The “will it fire?” question disappears: “removing a class of problem from even being a problem.” <b>Orchestration</b>.</p>
     </div>
   </div>
+  <p class="thesis">Scripts can fire user-invoked skills too: <code>claude -p "/implement &lt;ticket&gt;"</code> in a loop. Matt recommends this <b>deterministic loop</b> for running tickets AFK.</p>
 </section>
 
 <section class="slide">
@@ -442,7 +488,7 @@ useEffect(() =&gt; {
       <div class="who"><code>SKILL.md</code></div>
       <div class="row"><span class="chip">step 1</span><span class="arrow">→</span><span class="chip">step 2</span><span class="arrow">→</span><span class="chip">step 3</span></div>
       <p class="cap">+ reference every branch needs</p>
-      <p class="cap mono">“if writing an ADR, read ADR-FORMAT.md”</p>
+      <p class="cap mono">ADR step: “Use the format in ADR-FORMAT.md”</p>
     </div>
     <div style="display:grid;gap:.8em">
       <div class="lane"><div class="who mono" style="font-size:.9em">ADR-FORMAT.md</div><p class="cap">only the ADR branch reads it</p></div>
@@ -475,12 +521,18 @@ useEffect(() =&gt; {
 
 <section class="slide">
   <p class="eyebrow">Conclusion</p>
-  <h2>Three pillars, recapped.</h2>
-  <div class="cards">
-    <div class="card gold"><span class="num">①</span><h3>Fundamentals</h3><p>Old engineering books still answer the new AI failure modes.</p></div>
-    <div class="card gold"><span class="num">②</span><h3>Environment</h3><p>Review the system that creates the code, not just the code.</p></div>
-    <div class="card gold"><span class="num">③</span><h3>Control</h3><p>Review one-way doors.</p></div>
-  </div>
+  <h2>Key lines</h2>
+  <ul>
+    <li>No-one knows exactly what they want.</li>
+    <li>The rate of feedback is your speed limit.</li>
+    <li>Design the interface, delegate the implementation.</li>
+    <li>Code is not cheap. Bad code is the most expensive it's ever been.</li>
+    <li>Implement makes it work. Review makes it good.</li>
+    <li>Spend your review on one-way doors.</li>
+    <li>Review the system that creates the code, not just the code.</li>
+    <li>Removing a class of problem from even being a problem.</li>
+    <li>I don't want to delegate my thinking to the model.</li>
+  </ul>
 </section>
 
 <section class="slide">
@@ -511,6 +563,8 @@ useEffect(() =&gt; {
     <li class="plain"><a href="https://blog.aihao.tw/2026/07/25/mattpocock-skills-design-philosophy/">blog.aihao.tw — Matt Pocock 的 Agent Skill 設計哲學</a></li>
     <li class="plain"><a href="https://x.com/mattpocockuk/status/2077789613691699629">@mattpocockuk — My skills vs superpowers</a></li>
     <li class="plain"><a href="https://youtu.be/v4F1gFy-hqg">Software Fundamentals Matter More Than Ever</a></li>
+    <li class="plain"><a href="https://youtu.be/-QFHIoCo-Ko">Full Walkthrough: Workflow for AI Coding (Workshop, Apr 2026)</a></li>
+    <li class="plain"><a href="https://youtu.be/nQwJVHCtDDY">Matt Pocock's Agentic Engineering Workflow, with David Ondrej (Jun 2026)</a></li>
     <li class="plain"><a href="https://youtu.be/M6mYodf0dJM">mattpocock/skills: A complete AI Coding workflow, end-to-end</a></li>
     <li class="plain"><a href="https://youtu.be/UNzCG3lw6O0">Building Great Agent Skills: The Missing Manual</a></li>
     <li class="plain"><a href="https://youtu.be/BsJGo1wFTvQ">New Skills! v1.3 brings /pr, /implement-spec, and /retro</a></li>
