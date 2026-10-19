@@ -444,18 +444,14 @@ useEffect(() =&gt; {
 <section class="slide">
   <p class="eyebrow">Code Review · Layer 3 · Human review</p>
   <h2>Same comment in two PRs? The bug is in the system.</h2>
-  <div class="vs">
-    <div class="lane">
-      <div class="who"><code>/retro</code> reads agent sessions</div>
-      <ul>
-        <li><b>Mechanical mistake</b> → lint / CI check. A check always runs; a rule may be ignored.</li>
-        <li><b>Judgement call</b> → <code>CODING_STANDARDS.md</code>, for the reviewer</li>
-        <li><b>AGENTS.md</b> → navigation pointers only</li>
-      </ul>
-    </div>
-    <div class="lane mine" style="align-content:center">
-      <p class="pull" style="border:none;padding:0;margin:0">Review the system that creates the code, not just the code.<cite>— Matt Pocock, paraphrased</cite></p>
-    </div>
+  <p class="pull">Review the system that creates the code, not just the code.<cite>— Matt Pocock, paraphrased</cite></p>
+  <div class="lane" style="max-width:46rem">
+    <div class="who"><code>/retro</code> reads agent sessions</div>
+    <ul>
+      <li><b>Mechanical mistake</b> → lint / CI check. A check always runs; a rule may be ignored.</li>
+      <li><b>Judgement call</b> → <code>CODING_STANDARDS.md</code>, for the reviewer</li>
+      <li><b>AGENTS.md</b> → navigation pointers only</li>
+    </ul>
   </div>
 </section>
 
