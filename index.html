@@ -101,6 +101,20 @@ figcaption{font-family:var(--mono);font-size:.68em;color:var(--muted);letter-spa
 
 pre{margin:0;background:var(--card);border:1px solid var(--hair);border-radius:10px;padding:1em 1.1em;
   font-family:var(--mono);font-size:.74em;line-height:1.6;overflow-x:auto;white-space:pre}
+.ide{width:100%;background:#100f0e;color:#f4f3f1;border-radius:10px;overflow:hidden;font-family:var(--mono);font-size:.6em;box-shadow:0 12px 32px #14161a26}
+.ide-bar{display:flex;align-items:center;gap:.45em;padding:.6em .9em;background:#1b1a17;color:#f4f3f199}
+.ide-bar i{width:.75em;height:.75em;border-radius:50%;background:#ffffff26;display:inline-block}
+.ide-bar span{margin-left:.6em}
+.ide-body{display:grid;grid-template-columns:auto 1fr}
+.ide-tree{padding:.9em .8em;border-right:1px solid #ffffff14;color:#f4f3f180;line-height:2;white-space:nowrap}
+.ide-tree .on{color:#f4f3f1}
+.ide-tree .ptr{color:var(--gold)}
+.ide-code{padding:.9em 0;line-height:1.8;overflow:hidden}
+.ide-code div{padding:0 1em;white-space:pre}
+.ide-code .n{display:inline-block;width:2em;text-align:right;margin-right:1.2em;color:#f4f3f14d}
+.ide-code .h{color:var(--gold)}
+.ide-code .lk{color:#ff9a3c}
+.ide-code .hl{background:#f5c45126;box-shadow:inset 3px 0 0 var(--gold)}
 .code-label{font-family:var(--mono);font-size:.68em;letter-spacing:.14em;text-transform:uppercase;margin:0 0 .4em}
 
 table{border-collapse:collapse;width:100%;font-size:.8em}
@@ -439,10 +453,8 @@ useEffect(() =&gt; {
         <li><b>AGENTS.md</b> → navigation pointers only</li>
       </ul>
     </div>
-    <div class="lane mine">
-      <div class="who">You pick the fixes</div>
-      <p class="cap">Retro only suggests, ranked by severity. You judge which ones are real problems.</p>
-      <p class="cap">In Matt's own run, the top issue was an agent cutting a release without asking. He judged it minor: a release can be redone.</p>
+    <div class="lane mine" style="align-content:center">
+      <p class="pull" style="border:none;padding:0;margin:0">Review the system that creates the code, not just the code.<cite>— Matt Pocock, paraphrased</cite></p>
     </div>
   </div>
 </section>
@@ -484,27 +496,39 @@ useEffect(() =&gt; {
 <section class="slide">
   <p class="eyebrow">Write Skill · Structure</p>
   <h2>Steps and reference. Split by branch, not by length.</h2>
-  <div class="split" style="align-items:start">
-    <div class="lane mine">
-      <div class="who"><code>domain-modeling/SKILL.md</code></div>
-      <p class="code-label muted" style="margin:0">During the session</p>
-      <ul class="cap">
-        <li>Challenge against the glossary</li>
-        <li>Sharpen fuzzy language</li>
-        <li>Discuss concrete scenarios</li>
-        <li>Cross-reference with code</li>
-        <li><b>Update GLOSSARY.md inline</b> <span class="mono">“Use the format in GLOSSARY-FORMAT.md”</span></li>
-        <li><b>Offer ADRs sparingly</b> <span class="mono">“Use the format in ADR-FORMAT.md”</span></li>
-      </ul>
-      <p class="cap">Stays inline because every run needs it: the file layout, the three tests for an ADR.</p>
-    </div>
-    <div style="display:grid;gap:.8em">
-      <div class="lane"><div class="who mono" style="font-size:.9em">GLOSSARY-FORMAT.md</div><p class="cap">Glossary template and rules. Read only when a term gets resolved.</p></div>
-      <div class="lane"><div class="who mono" style="font-size:.9em">ADR-FORMAT.md</div><p class="cap">ADR template and numbering. Read only when an ADR gets written.</p></div>
-      <p class="cap" style="margin:0;font-size:.86em;color:var(--muted)">A session may update the glossary, write an ADR, or neither: that's why both templates live outside. <code>/to-spec</code> has one path, so its spec template stays inline.</p>
-    </div>
+  <div class="split" style="grid-template-columns:.72fr 1.28fr;align-items:center">
+    <ul>
+      <li><b>Two content types</b>: steps (ordered actions) and reference (definitions, rules, templates).</li>
+      <li><b>Three tiers</b>: step in <code>SKILL.md</code> → reference in <code>SKILL.md</code> → reference in its own file.</li>
+      <li><b>Push out by branch</b>: what every run needs stays in; what only some branches need goes behind a pointer.</li>
+      <li><b>Pointer wording</b> decides whether the agent reads the file.</li>
+    </ul>
+    <figure>
+      <div class="ide" role="img" aria-label="domain-modeling SKILL.md open in an editor, with pointers to GLOSSARY-FORMAT.md and ADR-FORMAT.md highlighted">
+        <div class="ide-bar"><i></i><i></i><i></i><span>domain-modeling/SKILL.md</span></div>
+        <div class="ide-body">
+          <div class="ide-tree">domain-modeling/<br>&nbsp;<span class="on">SKILL.md</span><br>&nbsp;<span class="ptr">GLOSSARY-FORMAT.md</span><br>&nbsp;<span class="ptr">ADR-FORMAT.md</span></div>
+          <div class="ide-code">
+<div><span class="n">42</span><span class="h">## During the session</span></div>
+<div><span class="n">44</span><span class="h">### Challenge against the glossary</span></div>
+<div><span class="n">48</span><span class="h">### Sharpen fuzzy language</span></div>
+<div><span class="n">52</span><span class="h">### Discuss concrete scenarios</span></div>
+<div><span class="n">56</span><span class="h">### Cross-reference with code</span></div>
+<div><span class="n">60</span><span class="h">### Update GLOSSARY.md inline</span></div>
+<div><span class="n">62</span>When a term is resolved, update `GLOSSARY.md` …</div>
+<div class="hl"><span class="n"></span>Use the format in <span class="lk">[GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md)</span>.</div>
+<div><span class="n">66</span><span class="h">### Offer ADRs sparingly</span></div>
+<div><span class="n">70</span>1. **Hard to reverse** …</div>
+<div><span class="n">71</span>2. **Surprising without context** …</div>
+<div><span class="n">72</span>3. **The result of a real trade-off** …</div>
+<div><span class="n">74</span>If any of the three is missing, skip the ADR.</div>
+<div class="hl"><span class="n"></span>Use the format in <span class="lk">[ADR-FORMAT.md](./ADR-FORMAT.md)</span>.</div>
+          </div>
+        </div>
+      </div>
+      <figcaption>Glossary update, ADR, or neither: branches, so both templates live outside. <code>/to-spec</code> has one path, so its template stays inline.</figcaption>
+    </figure>
   </div>
-  <p class="thesis">The pointer's wording decides whether the agent reads the file.</p>
 </section>
 
 <section class="slide">
